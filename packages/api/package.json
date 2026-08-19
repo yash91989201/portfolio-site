@@ -1,0 +1,28 @@
+{
+  "name": "@portfolio-site/api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@orpc/client": "catalog:",
+    "@orpc/openapi": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/zod": "catalog:",
+    "@portfolio-site/auth": "workspace:*",
+    "@portfolio-site/db": "workspace:*",
+    "@portfolio-site/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-site/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

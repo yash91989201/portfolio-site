@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio-site/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@portfolio-site/db": "workspace:*",
+    "@portfolio-site/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-site/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

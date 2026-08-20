@@ -1,5 +1,6 @@
 import { env } from "@portfolio-site/env/web";
 import { Toaster } from "@portfolio-site/ui/components/sonner";
+import { TooltipProvider } from "@portfolio-site/ui/components/tooltip";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -45,31 +46,35 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 	server: {
 		middleware: [createMiddleware().server(evlogErrorHandler)],
 	},
-});
-
-function RootDocument() {
-	return (
+	shellComponent: ({ children }: { children: React.ReactNode }) => (
 		<html className="dark" lang="en">
 			<head>
 				<HeadContent />
 			</head>
 			<body>
+				{children}
+				<Scripts />
+			</body>
+		</html>
+	),
+});
+
+function RootDocument() {
+	return (
+		<>
+			<TooltipProvider>
 				<div className="grid h-svh grid-rows-[auto_1fr]">
 					<Header />
 					<Outlet />
 				</div>
-				<Toaster richColors />
-				{env.VITE_ENV === "development" && (
-					<>
-						<TanStackRouterDevtools position="bottom-left" />
-						<ReactQueryDevtools
-							buttonPosition="bottom-right"
-							position="bottom"
-						/>
-					</>
-				)}
-				<Scripts />
-			</body>
-		</html>
+			</TooltipProvider>
+			<Toaster richColors />
+			{env.VITE_ENV === "development" && (
+				<>
+					<TanStackRouterDevtools position="bottom-left" />
+					<ReactQueryDevtools buttonPosition="bottom-right" position="bottom" />
+				</>
+			)}
+		</>
 	);
 }

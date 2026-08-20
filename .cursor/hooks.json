@@ -4,6 +4,12 @@
       {
         "command": "bun run fix --skip=correctness/noUnusedImports"
       }
+    ],
+    "preToolUse": [
+      {
+        "command": "[ ! -f \".cursor/skills/impeccable/scripts/hook-before-edit.mjs\" ] || node \".cursor/skills/impeccable/scripts/hook-before-edit.mjs\"",
+        "timeout": 5
+      }
     ]
   },
   "version": 1

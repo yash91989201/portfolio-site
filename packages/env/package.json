@@ -15,6 +15,7 @@
   "devDependencies": {
     "@portfolio-site/config": "workspace:*",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "^8.1.5"
   }
 }

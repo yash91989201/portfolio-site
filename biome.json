@@ -8,7 +8,6 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "**",
       "!**/.next",
       "!**/dist",
       "!**/.turbo",
@@ -43,7 +42,11 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
+      "performance": {
+        "noNamespaceImport": "off",
+        "noBarrelFile": "off"
+      },
       "correctness": {
         "useExhaustiveDependencies": "info"
       },
@@ -80,5 +83,9 @@
       "tailwindDirectives": true
     }
   },
-  "extends": ["ultracite/biome/core", "ultracite/biome/react", "ultracite/biome/tanstack"]
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/tanstack"
+  ]
 }

@@ -1,32 +1,51 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Product:
+  - A personal portfolio for potential employers, prospective clients, and collaborators.
+  - It should present professional experience, selected projects, and preferred technologies, then make it easy to contact the owner, discuss a project, or schedule a meeting.
+  - Lead with verifiable work and outcomes. Never invent or overstate projects, roles, testimonials, metrics, resume details, or social links. Treat missing content as an explicit dependency or open decision.
+  - apps/web/PRODUCT.md is the authority for product purpose, audiences, principles, constraints, available evidence, and open decisions.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Architecture and stack:
+  - Bun and Nx TypeScript monorepo using ES modules.
+  - apps/web is the runnable product: React 19, TanStack Start and Router, Vite, Nitro SSR, TanStack Query and Form, and Tailwind CSS 4.
+  - packages/ui owns shared shadcn/Base UI primitives, design tokens, fonts, and global styles. Product-specific routes and composed components belong in apps/web.
+  - packages/api provides the type-safe oRPC API; packages/auth provides Better Auth; packages/db provides Drizzle ORM with PostgreSQL; packages/env provides Zod-validated environment access.
+  - Import workspace packages through their @portfolio-site/* aliases and app code through the configured @/* alias. Avoid introducing duplicate local primitives or bypassing package boundaries.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+  Engineering conventions:
+  - Follow AGENTS.md and Ultracite: accessible, performant, type-safe, maintainable code with explicit intent and semantic HTML.
+  - Prefer React function components, TanStack route loaders or server functions for server data, and shared UI primitives before creating new ones.
+  - Preserve unrelated work in the worktree. Keep changes scoped to the accepted specification.
+  - Use bun run check for lint/format validation, bun run check-types for workspace type checks, and bun run build for production verification. Add focused tests for changed behavior when test coverage exists or is introduced by the change.
+
+rules:
+  proposal:
+    - State the visitor or maintainer problem, the intended outcome, and why the change is needed now.
+    - Include explicit Non-goals and identify unresolved product or content decisions instead of silently choosing or fabricating them.
+    - Name the affected workspace areas and call out changes that cross app, UI, API, auth, database, or environment boundaries.
+  specs:
+    - Write observable, testable requirements with Given/When/Then scenarios, including failure, empty, loading, and responsive states where relevant.
+    - Include accessibility requirements for interactive UI and preserve factual-evidence constraints for all portfolio content.
+    - Separate user-visible requirements from implementation details and do not prescribe a package unless the behavior requires that boundary.
+  design:
+    - Explain ownership and data flow across apps/web and packages/*, including alternatives and tradeoffs for non-trivial decisions.
+    - Reuse existing shared primitives, tokens, APIs, auth, database, and environment patterns unless the design documents a concrete reason not to.
+    - Document migrations, security/privacy implications, accessibility, performance, rollback, and content dependencies when applicable.
+  tasks:
+    - Use ordered checkbox tasks grouped into small, independently verifiable implementation steps.
+    - Include focused behavior verification plus bun run check, bun run check-types, and bun run build when relevant to the change.
+    - Identify tasks blocked on owner-supplied evidence or product decisions; never replace those inputs with invented placeholders presented as facts.
+
+operations:
+  apply:
+    guidance:
+      - Read the accepted proposal, specs, design, and tasks before editing; implement only the accepted scope and preserve unrelated worktree changes.
+      - Respect monorepo ownership boundaries and reuse @portfolio-site/ui primitives and tokens for product UI.
+      - Do not fabricate portfolio evidence. Surface missing owner content as a blocker, a clearly labeled placeholder, or an explicitly deferred task as allowed by the specification.
+      - Run focused verification first, then the relevant workspace checks; report commands, results, and any checks that could not run.
+  archive:
+    guidance:
+      - Archive only after implementation tasks and required verification are complete, or explicitly record any accepted deferrals.
+      - Reconcile the final implementation with the delta specs and summarize material deviations, migrations, remaining content dependencies, and follow-up work.

@@ -60,6 +60,7 @@
         }
       },
       "style": {
+        "useConsistentTypeDefinitions": "off",
         "noParameterAssign": "error",
         "useAsConstAssertion": "error",
         "useDefaultParameterLast": "error",
